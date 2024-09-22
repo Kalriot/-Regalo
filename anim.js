@@ -4,56 +4,63 @@ var lyrics = document.querySelector("#lyrics");
 
 // Array de objetos que contiene cada línea y su tiempo de aparición en segundos
 var lyricsData = [
-  { text: "At the time", time: 15 },
-  { text: "The whisper of birds", time: 18 },
-  { text: "Lonely before the sun cried", time: 27 },
-  { text: "Fell from the sky", time: 32 },
-  { text: "Like water drops", time: 33 },
-  { text: "Where I'm now? I don't know why", time: 41 },
-  { text: "Nice butterflies in my hands", time: 47 },
-  { text: "Too much light for twilight", time: 54 },
-  { text: "In the mood for the flowers love", time: 59 },
-  { text: "That vision", time: 67 },
-  { text: "Really strong, blew my mind", time: 72 },
-  { text: "Silence Let me see what it was", time: 78 },
-  { text: "I only want to live in clouds", time: 83 },
-  { text: "Where I'm now? I don't know why", time: 91 },
-  { text: "Nice butterflies in my hands", time: 97 },
-  { text: "Too much light for twilight", time: 104 },
-  { text: "In the mood for the flowers love", time: 108 },
-  { text: "At the time", time: 144 },
-  { text: "The whisper of birds", time: 148 },
-  { text: "Lonely before the sun cried", time: 153 },
-  { text: "Fell from the sky", time: 158 },
-  { text: "Like water drops", time: 164 },
-  { text: "Where I'm now? I don't know why", time: 169 },
-  { text: "Nice butterflies in my hands", time: 176 },
-  { text: "Too much light for twilight", time: 183 },
-  { text: "In the mood for the flowers", time: 188 },
-  { text: "Love.", time: 140 },
+  { text: "I found a love for me", time: 2 },
+  { text: "Darling, just dive right in and follow my lead", time: 8 },
+  { text: "Well, I found a girl, beautiful and sweet", time: 17 },
+  { text: "Oh, I never knew you were the someone waiting for me", time: 24 },
+  { text: "'Cause we were just kids when we fell in love", time: 31 },
+  { text: "Not knowing what it was"+" I will not give you up this time", time: 36 },
+  { text: "But darling, just kiss me slow"+" Your heart is all I own", time: 47 },
+  { text: "And in your eyes, you're holding mine", time: 54 },
+  { text: "Baby, I'm dancing in the dark"+" With you between my arms", time: 62 },
+  { text: "Barefoot on the grass"+" Listening to our favorite song", time: 72 },
+  { text: "When you said you looked a mess"+" I whispered underneath my breath", time: 80 },
+  { text: "But you heard it, darling"+" You look perfect tonight", time: 88 },
+  { text: "Well, I found a woman, stronger than anyone I know", time: 102 },
+  { text: "She shares my dreams"+" I hope that someday I'll share her home", time: 107 },
+  { text: "I found a love, to carry more than just my secrets", time: 114 },
+  { text: "To carry love, to carry children of our own", time: 124 },
+  { text: "We are still kids, but we're so in love", time: 129 },
+  { text: "Fighting against all odds"+" I know we'll be alright this time", time: 134 },
+  { text: "Darling, just hold my hand"+" Be my girl, I'll be your man", time: 145 },
+  { text: "I see my future in your eyes", time: 154 },
+  { text: "Baby, I'm dancing in the dark"+" With you between my arms", time: 160 },
+  { text: "Barefoot on the grass"+" Listening to our favorite song", time: 170 },
+  { text: "When I saw you in that dress"+" Looking so beautiful", time: 179 },
+  { text: "I don't deserve this"+" Darling, you look perfect tonight", time: 184 },
+  { text: "", time: 194 },
+  { text: "Baby, I'm dancing in the dark"+" With you between my arms"    , time: 205 },
+  { text: "Barefoot on the grass. Listening to our favorite song"    , time: 216 },
+  { text: "I have faith in what I see. Now I know I have met an angel in person"    , time: 223 },
+  { text: "And she looks perfect"    , time: 233 },
+  { text: "I don't deserve this. You look perfect tonight"    , time: 238 },
 ];
+
+
 
 // Animar las letras
 function updateLyrics() {
   var time = Math.floor(audio.currentTime);
-  var currentLine = lyricsData.find(
-    (line) => time >= line.time && time < line.time + 6
-  );
+  var currentLine = null;
+
+  // Encontrar la línea actual
+  for (var i = 0; i < lyricsData.length; i++) {
+    if (time >= lyricsData[i].time && (i == lyricsData.length - 1 || time < lyricsData[i + 1].time)) {
+      currentLine = lyricsData[i];
+      break;
+    }
+  }
 
   if (currentLine) {
-    // Calcula la opacidad basada en el tiempo en la línea actual
-    var fadeInDuration = 0.1; // Duración del efecto de aparición en segundos
-    var opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-
-    // Aplica el efecto de aparición
-    lyrics.style.opacity = opacity;
+    lyrics.style.opacity = 1;
     lyrics.innerHTML = currentLine.text;
   } else {
-    // Restablece la opacidad y el contenido si no hay una línea actual
     lyrics.style.opacity = 0;
     lyrics.innerHTML = "";
   }
 }
+
+setInterval(updateLyrics, 1000);
 
 setInterval(updateLyrics, 1000);
 
